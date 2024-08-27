@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('curriculums', function (Blueprint $table) {
             $table->id();
-            $table->string('title',255)->nullable(false)->comment('カリキュラムのタイトルを保存');
+            $table->string('title',255)->nullable(false)->comment('カリキュラムのタイトルを存');
             $table->string('thumbnail',255)->comment('カリキュラムのサムネイル画像を保存');
             $table->text('description');
             $table->text('video_url');
