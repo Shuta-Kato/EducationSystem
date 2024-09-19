@@ -1,0 +1,19 @@
+@charset "utf-8";
+.navbar{
+    background-color : rgb(246, 142, 37);
+    margin : 0;
+    height: 100px;
+    width: 100%;
+}
+.bannar-button{
+    border-style: none;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 10px;
+    padding:10px;
+    margin:20px;
+    width:150px;
+    font-size:110%;
+    color: white;
+    background-color: rgb(34, 137, 137);
+}
