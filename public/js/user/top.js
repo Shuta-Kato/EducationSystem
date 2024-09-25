@@ -1,0 +1,86 @@
+$(function(){
+    $("div[id^='icon-']")
+    .on('mouseover',function(){
+        $(this).css({
+            backgroundColor:'#f5deb3'
+        });
+    })
+    .on('mouseout',function(){
+        $(this).css({
+            backgroundColor:''
+        });
+    });
+});
+
+$(function(){
+    $("#icon-0")
+    .on('click',function(){
+        $("#banner-0").css({
+            opacity:1
+        })
+        $("#banner-1").css({
+            opacity:0
+        })
+        $("#banner-2").css({
+            opacity:0
+        })
+        $("#banner-3").css({
+            opacity:0
+        });
+    });
+});
+
+$(function(){
+    $("#icon-1")
+    .on('click',function(){
+        $("#banner-0").css({
+            opacity:0
+        })
+        $("#banner-1").css({
+            opacity:1
+        })
+        $("#banner-2").css({
+            opacity:0
+        })
+        $("#banner-3").css({
+            opacity:0
+        });
+    });
+});
+
+$(function(){
+    $("#icon-2")
+    .on('click',function(){
+        $("#banner-0").css({
+            opacity:0
+        })
+        $("#banner-1").css({
+            opacity:0
+        })
+        $("#banner-2").css({
+            opacity:1
+        })
+        $("#banner-3").css({
+            opacity:0
+        });
+    });
+});
+
+$(function(){
+    $("#icon-3")
+    .on('click',function(){
+        $("#banner-0").css({
+            opacity:0
+        })
+        $("#banner-1").css({
+            opacity:0
+        })
+        $("#banner-2").css({
+            opacity:0
+        })
+        $("#banner-3").css({
+            opacity:1
+        });
+    });
+});
+
