@@ -21,7 +21,8 @@ class DeliveryController extends Controller
         $progressModel = new CurriculumProgress;
         $clear_flg = $progressModel -> getClearflg($id); //授業の受講状態の取得
 
-//ここから公開時間の処理
+//ここから公開時間の処理※常時公開フラグが0だった場合に処理
+        if($always_flg == 0){
 
         $TimeModel = new DeliveryTime;
         $deliveryTime = $TimeModel ->getDeliveryTime($id); //公開期間の取得
@@ -31,13 +32,16 @@ class DeliveryController extends Controller
 
         $startTime = $deliveryTime -> delivery_from;
         $endTime = $deliveryTime -> delivery_to;
+        }
         
-        if($always_flg == 1){
-            $display_flg = 1; //$display_flgが1の場合は公開
-        }elseif($startTime <= $now && $now <= $endTime){
+       //以下$display_flgが1の場合は公開,0の場合は非公開
+
+        if($always_flg == 1){ //常時公開フラグが１なら$display_flgは1
+            $display_flg = 1; 
+        }elseif($startTime <= $now && $now <= $endTime){ //配信期間が１なら$display_flgは1
             $display_flg = 1;  
         }else{
-            $display_flg = 0; //$display_flgが1の場合は非公開
+            $display_flg = 0; //それ以外なら$display_flgは0
         }
 
         return view('user.delivery',['curriculum'=>$curriculum, 'clear_flg'=>$clear_flg,'display_flg'=>$display_flg,]);
