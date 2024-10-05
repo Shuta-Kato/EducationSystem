@@ -11,6 +11,8 @@ class CurriculumProgress extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['curriculums_id','users_id','clear_flg','created_at','updated_at'];
+
     public function getClearflg($id){
         $user_id = Auth::id();
         $query = DB::table('curriculum_progress')
@@ -23,11 +25,15 @@ class CurriculumProgress extends Model
     public function updateClearflg($id){
         $user_id = Auth::id();
 
-        DB::table('curriculum_progress')
-        -> where('curriculums_id', $id)
-        -> where('users_id', $user_id)
-        -> update([
-            'clear_flg' => 1,
-        ]);
+        CurriculumProgress::updateorCreate(
+            [
+                'curriculums_id' => $id,
+                'users_id'=> $user_id
+            ],
+            [
+                'clear_flg' => 1,   
+            ]
+            );
     }
+
 }
