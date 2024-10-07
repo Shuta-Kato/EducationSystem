@@ -1,0 +1,84 @@
+body{
+    width: 900px;
+    margin: 0 auto;
+}
+header{
+    display: inline-block;
+    width: 700px;
+    height: 80px;
+    background-color: aqua;
+}
+.transition li{
+    list-style: none;
+    float: left;
+    margin: 10px 5px;
+    
+}
+.transition li button{
+    border: 1px solid gray;
+    padding: 0 10px;
+    color: white;
+    background-color: gray;
+    border-radius: 7px;
+    font-size: 20px;
+}
+.logout{
+    float: right;
+    color: white;
+    margin: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+}
+.back{
+    display: block;
+    margin: 0 30px;
+    text-decoration: none;
+    color: black;
+    width: 50px;
+    
+}
+h1{
+    font-weight: normal;
+    margin: 0 30px;
+    font-size: 20px;
+}
+table{
+    margin: 20px 0 20px 100px; 
+    height: 100px;
+    line-height: center;
+}
+img{
+    margin: 10px;
+    width: 100px;
+    height: 80px;
+    object-fit: cover;
+}
+tr,td{
+    margin-bottom: 10px;
+}
+.delete_button{
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    border: none;
+}
+.addition_button{
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    border: none;
+    margin: 0 0 50px 100px;
+}
+.register{
+    display: block;
+    border: 1px solid gray;
+    padding: 0 10px;
+    color: white;
+    background-color: gray;
+    font-size: 15px;
+    width:130px;
+    margin: 0 auto;
+}
