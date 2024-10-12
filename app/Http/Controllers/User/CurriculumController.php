@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Curriculum;
 use App\Models\Grade;
 use Illuminate\Support\Facades\Log;
@@ -15,12 +15,10 @@ class CurriculumController extends Controller
     
     public function showCurriculumList(Request $request)
     {
-        $yearMonth = $request->input('month', date('Y-m'));
-        $gradeId = $request->input('grade_id');
-
-        // 追加：カリキュラム一覧を取得するロジック
         $model = new Curriculum();
         $curriculums = $model->showCurriculums();
+        $yearMonth = $request->input('month', date('Y-m'));
+        $gradeId = $request->input('grade_id');
 
         return view('user.curriculum_list', compact('yearMonth', 'gradeId', 'curriculums'));
     }
