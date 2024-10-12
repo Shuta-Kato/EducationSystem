@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Curriculum;
-use App\Models\Grade; // これを必要に応じて使います
+use App\Models\Grade; 
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
