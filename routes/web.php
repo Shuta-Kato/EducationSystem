@@ -15,14 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::prefix('user')->namespace('User')->name('show.')->group(function () {
-    Route::get('/curriculum_list', [App\Http\Controllers\User\CurriculumController::class, 'showCurriculumList'])->name('curriculum');
-
-    Route::get('/schedules/{yearMonth}/{grade}', [App\Http\Controllers\User\CurriculumController::class, 'schedules'])->name('schedules');
-
-    Route::post('/logout', [App\Http\Controllers\User\CurriculumController::class, 'logout'])->name('logout');
-});
-
 Route::prefix('admin')->namespace('Admin')->name('show.')->group(function () {
     Route::get('/banner_edit', [App\Http\Controllers\Admin\BannerController::class, 'showBannerEdit'])->name('banner.edit');
 
@@ -43,6 +35,27 @@ Route::prefix('admin')->namespace('Admin')->name('show.')->group(function () {
 
         Route::post('/register', [App\Http\Controllers\Admin\Auth\RegisterController::class, 'register'])->name('register.create');
     });
+});
+
+Route::prefix('user')->namespace('User')->name('user.')->group(function () {
+    Route::get('/login', [App\Http\Controllers\User\Auth\LoginController::class, 'showLoginForm'])->name('show.login');
+    Route::post('/login', [App\Http\Controllers\User\Auth\LoginController::class, 'login'])->name('login');
+    Route::post('/logout', [App\Http\Controllers\User\Auth\LoginController::class, 'logout'])->name('logout');
+
+    Route::get('/top', [App\Http\Controllers\User\TopController::class, 'showTop'])->name('show.top');
+    Route::get('/delivery/{id}', [App\Http\Controllers\User\DeliveryController::class, 'showDelivery'])->name('show.delivery')->middleware('auth');
+    Route::post('/delivery/{id}', [App\Http\Controllers\User\DeliveryController::class, 'updateClearFlg'])->name('update.clearFlg')->middleware('auth');
+
+    Route::get('/register', [App\Http\Controllers\User\Auth\RegisterController::class, 'showRegisterForm'])->name('show.register');
+    Route::post('/register', [App\Http\Controllers\User\Auth\RegisterController::class, 'register'])->name('register');
+
+    Route::get('/article/{id}', [App\Http\Controllers\User\ArticleController::class, 'showArticle'])->name('show.article')->middleware('auth');
+    Route::get('/curriculum_list', [App\Http\Controllers\User\CurriculumController::class, 'showCurriculumList'])->name('show.curriculum.list')->middleware('auth');
+
+    Route::get('/profile', [App\Http\Controllers\User\ProfileController::class, 'showProfileForm'])->name('show.profile')->middleware('auth');
+    Route::get('/progress', [App\Http\Controllers\User\ProgressController::class, 'showProgress'])->name('show.progress')->middleware('auth');
+
+    Route::get('/schedules/{yearMonth}/{grade}', [App\Http\Controllers\User\CurriculumController::class, 'schedules'])->name('schedules')->middleware('auth');
 });
 
 

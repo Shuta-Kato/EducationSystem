@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryTime extends Model
 {
@@ -20,5 +20,12 @@ class DeliveryTime extends Model
 
     public function curriculums(){
         return $this->belongsTo(Curriculum::class);
+    }
+
+    public function getDeliveryTime($id){
+        $deliveryTime = DB::table('delivery_times')
+        -> where ('curriculums_id',$id)
+        -> first();
+        return $deliveryTime;
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Models\Grade;
+
 
 class Curriculum extends Model
 {
@@ -32,5 +32,17 @@ class Curriculum extends Model
 
     public function grade(){
         return $this->belongsTo(Grade::class);
+    }
+
+    public function getCurriculums($id){
+        $curriculums = DB::table('curriculums')
+            ->where('id', $id)
+            ->first();
+        return $curriculums;
+    }
+
+    public function showCurriculums(){
+        $curriculums = DB::table('curriculums')->get();
+        return $curriculums;
     }
 }

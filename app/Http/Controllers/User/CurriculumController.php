@@ -12,12 +12,17 @@ use Carbon\Carbon;
 
 class CurriculumController extends Controller
 {
+    
     public function showCurriculumList(Request $request)
     {
-        $yearMonth = $request->input('month', date('Y-m')); 
+        $yearMonth = $request->input('month', date('Y-m'));
         $gradeId = $request->input('grade_id');
 
-        return view('user.curriculum_list', compact( 'yearMonth', 'gradeId'));
+        // 追加：カリキュラム一覧を取得するロジック
+        $model = new Curriculum();
+        $curriculums = $model->showCurriculums();
+
+        return view('user.curriculum_list', compact('yearMonth', 'gradeId', 'curriculums'));
     }
 
     public function schedules($yearMonth, $grade, Request $request)
