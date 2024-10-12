@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Curriculum;
+<<<<<<< HEAD
 use App\Models\Grade;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
@@ -83,3 +84,14 @@ class CurriculumController extends Controller
     return response()->json($schedules);
 }
 }
+=======
+
+class CurriculumController extends Controller
+{
+    public function showCurriculumList(){
+        $model = new Curriculum();
+        $curriculums = $model -> showCurriculums();
+        return view('user.curriculum_list');
+    }
+}
+>>>>>>> origin/team_develop

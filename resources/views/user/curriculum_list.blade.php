@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -53,3 +54,10 @@
         </div>
     </body>
 </html>
+=======
+@extends('user.layouts.app')
+
+@section('content')
+<h1>時間割ページ</h1>
+@endsection
+>>>>>>> origin/team_develop

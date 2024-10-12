@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class DeliveryTime extends Model
 {
     use HasFactory;
+<<<<<<< HEAD
 
     protected $table = 'delivery_times';
 
@@ -22,6 +23,8 @@ class DeliveryTime extends Model
         return $this->belongsTo(Curriculum::class);
     }
 
+=======
+>>>>>>> origin/team_develop
     public function getDeliveryTime($id){
         $deliveryTime = DB::table('delivery_times')
         -> where ('curriculums_id',$id)
