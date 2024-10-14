@@ -11,29 +11,42 @@ class CurriculumProgress extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['curriculums_id','users_id','clear_flg','created_at','updated_at'];
+    protected $table = 'curriculum_progress'; // テーブル名の指定
 
-    public function getClearflg($id){
-        $user_id = Auth::id();
-        $query = DB::table('curriculum_progress')
-        -> where('curriculums_id', $id)
-        -> where('users_id', $user_id)
-        -> value('clear_flg');
-        return $query;
+    protected $fillable = [
+        'curriculums_id',
+        'users_id',
+        'clear_flg',
+        'created_at',
+        'updated_at'
+    ];
+
+    public function curriculums()
+    {
+        return $this->belongsTo(Curriculum::class);
     }
 
-    public function updateClearflg($id){
+    public function getClearflg($id)
+    {
+        $user_id = Auth::id();
+        return DB::table('curriculum_progress')
+            ->where('curriculums_id', $id)
+            ->where('users_id', $user_id)
+            ->value('clear_flg');
+    }
+
+    public function updateClearflg($id)
+    {
         $user_id = Auth::id();
 
-        CurriculumProgress::updateorCreate(
+        CurriculumProgress::updateOrCreate(
             [
                 'curriculums_id' => $id,
-                'users_id'=> $user_id
+                'users_id' => $user_id
             ],
             [
-                'clear_flg' => 1,   
+                'clear_flg' => 1,
             ]
-            );
+        );
     }
-
 }

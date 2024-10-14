@@ -9,10 +9,25 @@ use Illuminate\Support\Facades\DB;
 class DeliveryTime extends Model
 {
     use HasFactory;
-    public function getDeliveryTime($id){
+
+    protected $table = 'delivery_times';
+
+    protected $fillable = [
+        'curriculums_id',
+        'delivery_from',
+        'delivery_to',
+    ];
+
+    public function curriculums()
+    {
+        return $this->belongsTo(Curriculum::class);
+    }
+
+    public function getDeliveryTime($id)
+    {
         $deliveryTime = DB::table('delivery_times')
-        -> where ('curriculums_id',$id)
-        -> first();
+            ->where('curriculums_id', $id)
+            ->first();
         return $deliveryTime;
     }
 }

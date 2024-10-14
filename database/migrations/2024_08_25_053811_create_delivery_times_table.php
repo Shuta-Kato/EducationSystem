@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('delivery_times', function (Blueprint $table) {
             $table->id();
-            $table->string('curriculums_id',10)->nullable(false)->comment('curriculumsテーブルのidと紐づく');
+            $table->string('curriculum_id',10)->nullable(false)->comment('curriculumsテーブルのidと紐づく');
             $table->dateTime('delivery_from')->nullable(false)->comment('カリキュラムの公開開始日');
             $table->dateTime('delivery_to')->nullable(false)->comment('カリキュラムの公開終了日');
             $table->timestamps();
