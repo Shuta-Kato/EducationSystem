@@ -1,0 +1,44 @@
+body{
+    width: 900px;
+    margin: 0 auto;
+}
+header{
+    display: inline-block;
+    width: 700px;
+    height: 80px;
+    background-color: aqua;
+}
+.transition li{
+    list-style: none;
+    float: left;
+    margin: 10px 5px;
+    
+}
+.transition li button{
+    border: 1px solid gray;
+    padding: 0 10px;
+    color: white;
+    background-color: gray;
+    border-radius: 7px;
+    font-size: 20px;
+}
+.logout{
+    float: right;
+    color: white;
+    margin: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+}
+.user_data {
+    list-style: none;
+    border: 1px solid gray;
+    color: gray;
+    width: 500px;
+    font-size: 14px;
+    margin: 70px;
+    padding: 20px 0 20px 20px;
+}
+.user_data li{
+    margin-bottom: 20px;
+}

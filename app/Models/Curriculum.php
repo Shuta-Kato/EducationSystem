@@ -10,10 +10,33 @@ class Curriculum extends Model
 {
     use HasFactory;
 
+    protected $table = 'curriculums';
+
+    protected $fillable = [
+        'title', 
+        'thumbnail', 
+        'description', 
+        'video_url', 
+        'alway_delivery_flg', 
+        'grade_id',
+    ];
+
+    public function curriculumProgres(){
+        return $this->hasMany(CurriculumProgres::class);
+    }
+
+    public function deliveryTimes(){
+        return $this->hasMany(DeliveryTime::class);
+    }
+
+    public function grade(){
+        return $this->belongsTo(Grade::class);
+    }
+
     public function getCurriculums($id){
         $curriculums = DB::table('curriculums')
-        -> where('id', $id)
-        -> first();
+            ->where('id', $id)
+            ->first();
         return $curriculums;
     }
 

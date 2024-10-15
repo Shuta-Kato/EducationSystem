@@ -1,0 +1,51 @@
+body{
+    width: 900px;
+    margin: 0 auto;
+}
+.alert li{
+    text-align: left;
+    color: red;
+}
+.login{
+    border: none;
+    color: gray;
+    font-size: 15px;
+    margin: 30px 30px 20px 700px;
+    text-decoration: none;
+}
+h1{
+    text-align: center;
+    color: gray;
+    font-size: 40px;
+    font-weight: normal;
+    margin-bottom: 70px;
+}
+ul{
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+li{
+    list-style: none;
+    margin-bottom: 20px;
+    width: 550px;
+    text-align: right;
+}
+li input{
+    width: 300px;
+    height: 20px;
+}
+label{
+    color: gray; 
+}
+.register{
+    display: block;
+    text-align: center;
+}
+.register button{
+    border: none;
+    background-color: gray;
+    padding: 0 50px;
+    color: white;
+    font-size: 30px;
+}
