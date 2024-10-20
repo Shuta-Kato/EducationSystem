@@ -2,8 +2,10 @@
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 		<title>管理 バナー管理</title>
         <link rel="stylesheet" href="{{ asset('/css/admin/banner_edit.css') }}">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="{{ asset('/js/admin/banner_edit.js') }}"></script>
     </head>
 	<body>
@@ -32,13 +34,15 @@
             @csrf 
             <table id="bannerTable">
                 <tbody>
+                    @foreach($banners as $banner)
                     <tr>
-                        <td><img class="banner_image" id="preview1"></td>
-                        <td><input type="file" class="file-input" name="banner_images[]" onchange="previewImage(event, 1)"></td>
+                        <td><img class="banner_image" src="{{ asset('storage/' . $banner->image) }}" id="banner-{{ $banner->id }}"></td>
+                        <td><input type="file" class="file-input" name="banner_images[]" onchange="previewImage(event, 1)" multiple></td>
                         <td>
-                            <button class="delete_button" onclick="deleteRow(this)">ー</button>
+                        <button class="delete_button" type="button" onclick="deleteExistingRow({{ $banner->id }}, '{{ route('show.banner.delete', $banner->id) }}')">ー</button>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
             <button class="addition_button" type="button" onclick="addRow()">+</button>
