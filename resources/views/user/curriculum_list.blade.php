@@ -2,6 +2,7 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>ユーザー 時間割</title>
         <link rel="stylesheet" href="{{ asset('/css/user/curriculum_list.css') }}">
         <script src="{{ asset('/js/user/curriculum_list.js') }}"></script>
@@ -19,7 +20,7 @@
                     <li><button type="submit">プロフィール設定</button></li>
                 </form>
             </ul>
-            <form id="logout" action="#" method="null">
+            <form id="logout" action="{{ route('user.logout') }}" method="POST">
                 @csrf
                 <input type="submit" class="logout" value="ログアウト">
             </form>

@@ -1,4 +1,5 @@
 let currentMonth = new Date(); 
+let allExpired = true; 
     
 function goToPrevMonth() {
     currentMonth.setMonth(currentMonth.getMonth() - 1); 
@@ -33,6 +34,9 @@ function fetchSchedule(month, grade) {
     })
     .then(data => {
         displaySchedule(data);
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
     });
         
 }
@@ -51,13 +55,22 @@ function selectGrade(grade) {
         selectedButton.classList.add('selected');
     }
 
-    let month = currentMonth.getFullYear() + '-' + String(currentMonth.getMonth() + 1).padStart(2, '0'); // 現在の月を取得
+    let month = currentMonth.getFullYear() + '-' + String(currentMonth.getMonth() + 1).padStart(2, '0'); 
     fetchSchedule(month, grade);  
 }
 
 function displaySchedule(schedules) {
     let scheduleContent = document.getElementById('scheduleContent');
-    scheduleContent.innerHTML = '';
+    scheduleContent.innerHTML = ''; 
+
+    if (!Array.isArray(schedules)) {
+        if (schedules.message) { 
+            scheduleContent.innerHTML = `<p>${schedules.message}</p>`;
+        } else {
+            scheduleContent.innerHTML = '<p>不明なエラーが発生しました。</p>';
+        }
+        return; 
+    }
 
     if (schedules.length === 0) {
         scheduleContent.innerHTML = '<p>スケジュールがありません。</p>';
@@ -75,28 +88,48 @@ function displaySchedule(schedules) {
     for (let date in groupedSchedules) {
         let schedule = document.createElement('div');
         schedule.className = 'video';
-        schedule.innerHTML = `<img src="${groupedSchedules[date][0].thumbnail}" alt="動画サムネイル">`; 
-        
+        schedule.innerHTML = `<img src="${groupedSchedules[date][0].thumbnail}" alt="動画サムネイル">`;
+
         let title = document.createElement('a');
         title.className = 'curriculum_title';
         title.innerText = groupedSchedules[date][0].title;
-        title.href = '#'; 
+        title.href = '#';
         title.onclick = (e) => {
             e.preventDefault();
         };
 
         schedule.appendChild(title);
-        
+
         let list = document.createElement('ul');
+        let hasValidSchedule = false; 
+        allExpired = true;
 
         groupedSchedules[date].forEach(item => {
             let listItem = document.createElement('li');
-            listItem.innerHTML = `${item.date} ${item.time}`; 
+            listItem.innerHTML = `${item.date} ${item.time}`;
+
+            if (item.alway_delivery_flg === 0 && item.isExpired) {
+                listItem.innerHTML += ' <span class="expired">配信期間が過ぎました</span>';
+            } else {
+                hasValidSchedule = true; 
+            }
+
             list.appendChild(listItem);
         });
 
-        schedule.appendChild(list); 
-        scheduleContent.appendChild(schedule); 
+        if (hasValidSchedule || groupedSchedules[date].some(item => item.alway_delivery_flg === 1)) {
+            allExpired = false; 
+        }
+
+        schedule.appendChild(list);
+        scheduleContent.appendChild(schedule);
+    }
+
+    if (allExpired) {
+        let expiredMessage = document.createElement('p');
+        expiredMessage.innerText = '配信期間が過ぎました。'; 
+        scheduleContent.innerHTML = ''; 
+        scheduleContent.appendChild(expiredMessage); 
     }
 }
 
