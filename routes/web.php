@@ -18,7 +18,7 @@ Route::prefix('admin')->namespace('Admin')->name('show.')->group(function () {
 
     Route::post('/banner_edit', [App\Http\Controllers\Admin\BannerController::class, 'showBannerStore'])->name('banner.store');
 
-    Route::delete('/banner_edit', [App\Http\Controllers\Admin\BannerController::class, 'showBannerDelete'])->name('banner.delete');
+    Route::delete('/banner_edit/{id}', [App\Http\Controllers\Admin\BannerController::class, 'showBannerDelete'])->name('banner.delete');
 
     Route::get('/top', [App\Http\Controllers\Admin\TopController::class, 'showTop'])->name('top');
 
