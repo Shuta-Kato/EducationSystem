@@ -24,14 +24,17 @@ class BannerRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'required|mimes:jpeg,png,gif',
+            'banner_images' => 'required|array',
+            'banner_images.*' => 'file|image|mimes:jpeg,png,gif', 
         ];
     }
 
     public function messages()
     {
         return [
-            'image.required' => '有効な画像ファイルを選択してください',
+            'banner_images.required' => '画像ファイルを選択してください',
+            'banner_images.*.image' => '有効な画像ファイルを選択してください',
+            'banner_images.*.mimes' => 'jpeg, png, gif形式のみ対応しています',
         ];
     }
 }

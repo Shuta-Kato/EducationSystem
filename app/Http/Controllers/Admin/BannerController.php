@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\BannerRequest;
+
 
 class BannerController extends Controller
 {
@@ -15,8 +17,10 @@ class BannerController extends Controller
         return view('admin.banner_edit', compact('banners'));
     }
 
-    public function showBannerStore(Request $request)
-    {   
+    public function showBannerStore(BannerRequest $request)
+    {
+        $request->validated(); 
+
         try {
             if ($request->hasFile('banner_images')) 
             {
@@ -31,7 +35,7 @@ class BannerController extends Controller
             }
 
             return redirect()->back()->with('success', 'バナーが保存されました');
-        
+    
         } catch (\Exception $e) {
             DB::rollBack(); 
             return redirect()->back()->with('error', 'バナーの保存に失敗しました');
