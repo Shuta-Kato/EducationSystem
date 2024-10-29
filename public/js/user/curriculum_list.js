@@ -41,22 +41,22 @@ function fetchSchedule(month, grade) {
         
 }
 
-function selectGrade(grade) {
+function selectGrade(gradeId) {
     let currentGradeDisplay = document.getElementById('currentGradeDisplay');
-    currentGradeDisplay.innerText = grade;
+    currentGradeDisplay.innerText = `${gradeId}`;
 
     let buttons = document.querySelectorAll('.grade button');
     buttons.forEach(button => {
         button.classList.remove('selected');
     });
 
-    const selectedButton = [...buttons].find(button => button.innerText === grade);
+    const selectedButton = [...buttons].find(button => button.innerText.includes(gradeId));
     if (selectedButton) {
         selectedButton.classList.add('selected');
     }
 
     let month = currentMonth.getFullYear() + '-' + String(currentMonth.getMonth() + 1).padStart(2, '0'); 
-    fetchSchedule(month, grade);  
+    fetchSchedule(month, gradeId);  
 }
 
 function displaySchedule(schedules) {

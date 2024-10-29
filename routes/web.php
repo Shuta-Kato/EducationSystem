@@ -53,7 +53,7 @@ Route::prefix('user')->namespace('User')->name('user.')->group(function () {
     Route::get('/profile', [App\Http\Controllers\User\ProfileController::class, 'showProfileForm'])->name('show.profile')->middleware('auth');
     Route::get('/progress', [App\Http\Controllers\User\ProgressController::class, 'showProgress'])->name('show.progress')->middleware('auth');
 
-    Route::get('/schedules/{yearMonth}/{grade}', [App\Http\Controllers\User\CurriculumController::class, 'schedules'])->name('schedules');
+    Route::get('/schedules/{yearMonth}/{gradeId}', [App\Http\Controllers\User\CurriculumController::class, 'schedules'])->name('schedules');
 });
 
 Auth::routes();

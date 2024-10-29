@@ -20,7 +20,7 @@ class CurriculumController extends Controller
         return view('user.curriculum_list', compact('yearMonth', 'gradeId', 'curriculums'));
     }
 
-    public function schedules($yearMonth, $grade, Request $request)
+    public function schedules($yearMonth, $gradeId, Request $request)
     {
     
         try {
@@ -31,8 +31,8 @@ class CurriculumController extends Controller
         }
 
         try {
-            $curriculumsTrue = Curriculum::getCurriculumsSchedule($grade, $startDate, $endDate, true);
-            $curriculumsFalse = Curriculum::getCurriculumsSchedule($grade, $startDate, $endDate, false);
+            $curriculumsTrue = Curriculum::getCurriculumsSchedule($gradeId, $startDate, $endDate, true);
+            $curriculumsFalse = Curriculum::getCurriculumsSchedule($gradeId, $startDate, $endDate, false);
             $curriculumsAll = $curriculumsTrue->merge($curriculumsFalse);
         
             if ($curriculumsAll->isEmpty()) {
