@@ -41,6 +41,15 @@
                         <td>
                         <button class="delete_button" type="button" onclick="deleteExistingRow({{ $banner->id }}, '{{ route('show.banner.delete', $banner->id) }}')">ー</button>
                         </td>
+                        @if ($errors->any())
+                            <script>
+                                let errorMessage = "";
+                                @foreach ($errors->all() as $error)
+                                    errorMessage += "{{ $error }}\n";
+                                @endforeach
+                                alert(errorMessage);
+                            </script>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
