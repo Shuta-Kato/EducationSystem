@@ -55,7 +55,7 @@ class Curriculum extends Model
             });
         }])
         ->whereHas('grade', function ($query) use ($grade) {
-            $query->where('name', $grade);
+            $query->where('id', $grade);
         });
 
         if (!is_null($alwaysDeliveryFlag)) {
