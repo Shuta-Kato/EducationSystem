@@ -9,18 +9,18 @@
         <script src="{{ asset('/js/admin/banner_edit.js') }}"></script>
     </head>
 	<body>
-    <header>
-        <ul class="transition">
-            <form action="#" method="GET">
-                <li><button type="submit">授業管理</button></li>
-            </form>
-            <form action="#" method="GET">
-                <li><button type="submit">お知らせ管理</button></li>
-            </form>
-            <form action="{{ route('show.banner.edit') }}" method="GET">
-                <li><button type="submit">バナー管理</button></li>
-            </form>
-        </ul>
+        <header>
+            <ul class="transition">
+                <form action="#" method="GET">
+                    <li><button type="submit">授業管理</button></li>
+                </form>
+                <form action="#" method="GET">
+                    <li><button type="submit">お知らせ管理</button></li>
+                </form>
+                <form action="{{ route('show.banner.edit') }}" method="GET">
+                    <li><button type="submit">バナー管理</button></li>
+                </form>
+            </ul>
             <form id="logout" action="{{route('show.logout') }}" method="POST">
                 @csrf
                 <input type="submit" class="logout" value="ログアウト">
@@ -57,5 +57,10 @@
             <button class="addition_button" type="button" onclick="addRow()">+</button>
             <input type="submit" class="register" value="登録">
         </form>
+        @if (session('success'))
+            <script>
+                alert("{{ session('success') }}");
+            </script>
+        @endif
     </body>
 </html>
