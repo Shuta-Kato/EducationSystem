@@ -13,11 +13,11 @@ class Curriculum extends Model
     protected $table = 'curriculums';
 
     protected $fillable = [
-        'title', 
-        'thumbnail', 
-        'description', 
-        'video_url', 
-        'alway_delivery_flg', 
+        'title',
+        'thumbnail',
+        'description',
+        'video_url',
+        'alway_delivery_flg',
         'grade_id',
     ];
 
@@ -28,7 +28,7 @@ class Curriculum extends Model
 
     public function deliveryTimes()
     {
-        return $this->hasMany(DeliveryTime::class);
+        return $this->hasMany(DeliveryTime::class, "curriculums_id");
     }
 
     public function grade()
@@ -54,9 +54,9 @@ class Curriculum extends Model
                     ->orWhereBetween('delivery_to', [$startDate, $endDate]);
             });
         }])
-        ->whereHas('grade', function ($query) use ($grade) {
-            $query->where('name', $grade);
-        });
+            ->whereHas('grade', function ($query) use ($grade) {
+                $query->where('name', $grade);
+            });
 
         if (!is_null($alwaysDeliveryFlag)) {
             $query->whereHas('deliveryTimes', function ($query) use ($alwaysDeliveryFlag) {

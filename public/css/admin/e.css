@@ -1,0 +1,31 @@
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-remove-delivery_time {
+    background-color: red;
+    color: white;
+    border: none;
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#add-delivery_time {
+    background-color: green;
+    color: white;
+    border: none;
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
