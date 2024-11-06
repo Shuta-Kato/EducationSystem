@@ -18,7 +18,7 @@ class DeliveryTime extends Model
         'delivery_to',
     ];
 
-    public function curriculums()
+    public function curriculum()
     {
         return $this->belongsTo(Curriculum::class);
     }
@@ -29,5 +29,10 @@ class DeliveryTime extends Model
             ->where('curriculums_id', $id)
             ->first();
         return $deliveryTime;
+    }
+
+    public function deliveryTimes()
+    {
+        return $this->hasMany(DeliveryTime::class, 'curriculum_id', 'id');
     }
 }

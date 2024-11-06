@@ -1,0 +1,128 @@
+/* 全体レイアウト設定 */
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 戻るボタン */
+.custom-back-button {
+    border-radius: 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* 現在の学年ボタン */
+.btn-current-grade {
+    background-color: #5bc0de;
+    color: #5bc0de;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+/* サイドバーの学年選択ボタン */
+.grade-button {
+    height: 40px;
+    width: 120px;
+    border-radius: 20px;
+    color: white;
+    font-size: 14px;
+}
+
+/* 学年ごとの色設定 */
+.grade-button[data-grade-id="1"] { background-color: #ffad60; } /* オレンジ */
+.grade-button[data-grade-id="2"] { background-color: #5bc0de; } /* 水色 */
+.grade-button[data-grade-id="3"] { background-color: #77dd77; } /* 緑 */
+.grade-button[data-grade-id="4"] { background-color: #9370db; } /* 紫 */
+.grade-button[data-grade-id="5"] { background-color: #ff6961; } /* 赤 */
+.grade-button[data-grade-id="6"] { background-color: #ffb347; } /* 濃いオレンジ */
+.grade-button[data-grade-id="7"] { background-color: #3d85c6; } /* 青 */
+.grade-button[data-grade-id="8"] { background-color: #6aa84f; } /* 濃い緑 */
+.grade-button[data-grade-id="9"] { background-color: #f7786b; } /* ピンク */
+.grade-button[data-grade-id="10"] { background-color: #ff6f61; } /* ダークレッド */
+.grade-button[data-grade-id="11"] { background-color: #8a2be2; } /* ダークパープル */
+.grade-button[data-grade-id="12"] { background-color: #4682b4; } /* スチールブルー */
+
+/* カードデザイン */
+.curriculum-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 50%; /* 高さを統一 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-img-top {
+    height: 100px; /* 画像の高さを統一 */
+    object-fit: cover;
+}
+
+/* カードコンテンツ */
+.card-body-custom {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    text-align: center;
+    flex-grow: 1; /* 高さを均一に */
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    min-height: 40px; /* タイトルの高さを統一 */
+}
+
+/* 配信日時のリスト */
+.list-group-item {
+    font-size: 14px;
+    padding: 5px 10px;
+    border: none;
+    line-height: 1.5; /* 行間を調整 */
+}
+
+/* ボタンのスタイル */
+.custom-btn {
+    border-radius: 20px;
+    font-size: 14px;
+    margin-right: 5px;
+    height: 40px;
+    width: 120px;
+    text-align: center;
+}
+
+/* ボタンの配置 */
+.mt-3.d-flex {
+    gap: 10px;
+    justify-content: center; 
+}
+/* セクションタイトルのスタイル */
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left; /* 左側に寄せる */
+    margin-bottom: 20px;
+}
+
+/* 現在の学年テキストのコンテナ */
+.current-grade-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 15px; /* カードと同じ幅の余白を設定 */
+}
+
+.current-grade {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.img-container{
+    width: 100%;
+    height: 100%; 
+}

@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', '管理 トップ')</title>
+    <link rel="stylesheet" href="{{ asset('/css/admin/auth/curriculum.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/admin/top.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/admin/auth/delivery_time.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/admin/auth/curriculum_edit.css') }}">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
 <body>
     <header>
         <ul class="transition">
@@ -23,9 +29,10 @@
             <input type="submit" class="logout" value="ログアウト">
         </form>
     </header>
-    
+
     <main>
         @yield('content')
     </main>
 </body>
+
 </html>

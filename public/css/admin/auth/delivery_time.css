@@ -1,0 +1,77 @@
+.container {
+    max-width: 100%;
+    margin: auto;
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-row .col-md-3, .form-row .col-md-2, .form-row .col-md-1 {
+    margin-right: 5px;
+}
+
+.form-row .col-md-1.text-center {
+    margin-left: 10px;
+}
+
+.btn-remove-delivery_time {
+    background-color: red;
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    font-size: 16px;
+    border-radius: 80% !important; 
+}
+
+.btn-success{
+    border-radius: 80% !important;
+}
+
+#add-delivery_time {
+    background-color: red; 
+    color: white; 
+    border: none; 
+}
+
+.btn {
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 50% ;
+}
+
+#add-delivery_time {
+    margin-top: 10px;
+}
+
+.schedule-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    width: 100px;
+}
+
+.btn btn-primary{
+    text-align: center !important;
+}
+.form-group_2 {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
