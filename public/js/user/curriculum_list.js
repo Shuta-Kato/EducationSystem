@@ -1,6 +1,22 @@
 let currentMonth = new Date(); 
-let allExpired = true; 
-    
+let allExpired = true;
+let gradeId = 1; 
+
+let gradeNames = {
+    1: '小学校1年生',
+    2: '小学校2年生',
+    3: '小学校3年生',
+    4: '小学校4年生',
+    5: '小学校5年生',
+    6: '小学校6年生',
+    7: '中学校1年生',
+    8: '中学校2年生',
+    9: '中学校3年生',
+    10: '高校1年生',
+    11: '高校2年生',
+    12: '高校3年生'
+};
+
 function goToPrevMonth() {
     currentMonth.setMonth(currentMonth.getMonth() - 1); 
     updateDisplay(); 
@@ -19,8 +35,7 @@ function updateDisplay() {
 
     monthDisplay.innerText = `${year}年${month}月のスケジュール`;
 
-    let currentGrade = document.getElementById('currentGradeDisplay').innerText;
-    fetchSchedule(monthKey, currentGrade);
+    fetchSchedule(monthKey, gradeId);
 }
 
 function fetchSchedule(month, grade) {
@@ -38,25 +53,32 @@ function fetchSchedule(month, grade) {
     .catch(error => {
         console.error('Fetch error:', error);
     });
-        
 }
 
-function selectGrade(grade) {
+document.addEventListener('DOMContentLoaded', function() {
+    let gradeId = 1; 
+    updateDisplay(); 
+    document.getElementById('currentGradeDisplay').innerText = gradeNames[gradeId]; // 初期の学年名を表示
+    selectGrade(gradeId); 
+});
+
+function selectGrade(selectedGradeId) {
+    gradeId = selectedGradeId;
     let currentGradeDisplay = document.getElementById('currentGradeDisplay');
-    currentGradeDisplay.innerText = grade;
+    currentGradeDisplay.innerText = gradeNames[gradeId]; // 学年名を表示
 
     let buttons = document.querySelectorAll('.grade button');
     buttons.forEach(button => {
         button.classList.remove('selected');
     });
 
-    const selectedButton = [...buttons].find(button => button.innerText === grade);
+    const selectedButton = [...buttons].find(button => button.innerText.includes(gradeNames[gradeId]));
     if (selectedButton) {
         selectedButton.classList.add('selected');
     }
 
     let month = currentMonth.getFullYear() + '-' + String(currentMonth.getMonth() + 1).padStart(2, '0'); 
-    fetchSchedule(month, grade);  
+    fetchSchedule(month, gradeId);  
 }
 
 function displaySchedule(schedules) {
@@ -133,7 +155,3 @@ function displaySchedule(schedules) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('currentGradeDisplay').innerText = '小学校1年生';
-    updateDisplay();
-});

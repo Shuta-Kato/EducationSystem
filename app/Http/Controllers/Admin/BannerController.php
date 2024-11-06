@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\BannerRequest;
+
 
 class BannerController extends Controller
 {
@@ -15,8 +17,11 @@ class BannerController extends Controller
         return view('admin.banner_edit', compact('banners'));
     }
 
-    public function showBannerStore(Request $request)
-    {   
+    public function showBannerStore(BannerRequest $request)
+    {
+        $request->validated(); 
+        $count = 0;
+
         try {
             if ($request->hasFile('banner_images')) 
             {
@@ -27,14 +32,22 @@ class BannerController extends Controller
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
+                    $count++;
                 }
             }
+            if ($count === 1) {
+                $message = '画像ファイルを1件保存しました';
+            } elseif ($count > 1) {
+                $message = "画像ファイルを{$count}件保存しました";
+            } else {
+                $message = '画像ファイルが選択されていません';
+            }
 
-            return redirect()->back()->with('success', 'バナーが保存されました');
-        
+            return redirect()->back()->with('success',  $message);
+    
         } catch (\Exception $e) {
             DB::rollBack(); 
-            return redirect()->back()->with('error', 'バナーの保存に失敗しました');
+            return redirect()->back()->with('error', '画像ファイルの保存に失敗しました');
         }
     }
 
@@ -45,7 +58,7 @@ class BannerController extends Controller
             if ($banner) {
                 \Storage::delete('public/' . $banner->image);
                 DB::table('banners')->where('id', $id)->delete();
-                return response()->json(['success' => 'バナーが削除されました']);
+                return response()->json(['success' => '画像ファイルが削除されました']);
             } 
         } catch (\Exception $e) {
             return response()->json(['error' => '削除に失敗しました'], 500);

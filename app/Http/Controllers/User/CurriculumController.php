@@ -13,14 +13,19 @@ class CurriculumController extends Controller
 {
     public function showCurriculumList(Request $request)
     {
-        $curriculums = Curriculum::getAllCurriculums();
         $yearMonth = $request->input('month', date('Y-m'));
-        $gradeId = $request->input('grade_id');
+        $gradeId = $request->input('grade_id', 1); // デフォルトで1を設定
+        $grade = Grade::find($gradeId);
+        if (!$grade) {
+            Log::warning('指定された学年が見つかりません。', ['gradeId' => $gradeId]);
+            return response()->json(['error' => '指定された学年が見つかりません。'], 404);
+        }
 
+        $curriculums = Curriculum::getAllCurriculums();
         return view('user.curriculum_list', compact('yearMonth', 'gradeId', 'curriculums'));
     }
 
-    public function schedules($yearMonth, $grade, Request $request)
+    public function schedules($yearMonth, $gradeId, Request $request)
     {
     
         try {
@@ -31,14 +36,14 @@ class CurriculumController extends Controller
         }
 
         try {
-            $curriculumsTrue = Curriculum::getCurriculumsSchedule($grade, $startDate, $endDate, true);
-            $curriculumsFalse = Curriculum::getCurriculumsSchedule($grade, $startDate, $endDate, false);
+            $curriculumsTrue = Curriculum::getCurriculumsSchedule($gradeId, $startDate, $endDate, true);
+            $curriculumsFalse = Curriculum::getCurriculumsSchedule($gradeId, $startDate, $endDate, false);
             $curriculumsAll = $curriculumsTrue->merge($curriculumsFalse);
         
             if ($curriculumsAll->isEmpty()) {
                 Log::warning('指定された条件に一致するカリキュラムが見つかりません。', [
                     'yearMonth' => $yearMonth,
-                    'grade' => $grade,
+                    'gradeId' => $gradeId,
                 ]);
                 return response()->json(['error' => '指定された条件に一致するカリキュラムが見つかりません。'], 404);
             }
@@ -52,47 +57,46 @@ class CurriculumController extends Controller
         $hasExpiredSchedules = false; 
     
         foreach ($curriculumsAll as $curriculum) {
-            foreach ($curriculumsAll as $curriculum) {
-                foreach ($curriculum->deliveryTimes as $deliveryTime) {
-                    try {
-                        $deliveryFrom = $deliveryTime->delivery_from instanceof \Carbon\Carbon
-                            ? $deliveryTime->delivery_from
-                            : Carbon::parse($deliveryTime->delivery_from);
-                        $deliveryTo = $deliveryTime->delivery_to instanceof \Carbon\Carbon
-                            ? $deliveryTime->delivery_to
-                            : Carbon::parse($deliveryTime->delivery_to);
+            foreach ($curriculum->deliveryTimes as $deliveryTime) {
+                try {
+                    $deliveryFrom = $deliveryTime->delivery_from instanceof \Carbon\Carbon
+                        ? $deliveryTime->delivery_from
+                        : Carbon::parse($deliveryTime->delivery_from);
+                    $deliveryTo = $deliveryTime->delivery_to instanceof \Carbon\Carbon
+                        ? $deliveryTime->delivery_to
+                        : Carbon::parse($deliveryTime->delivery_to);
             
-                        if ($curriculum->alway_delivery_flg == 1) {
+                    if ($curriculum->alway_delivery_flg == 1) {
+                        $schedules[] = [
+                            'title' => $curriculum->title,
+                            'thumbnail' => $curriculum->thumbnail,
+                            'date' => $deliveryFrom->format('n月j日'),
+                            'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
+                            'isExpired' => false,  
+                            'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
+                        ];
+                    } else {
+                        $isExpired = Carbon::now()->greaterThan($deliveryTo);
+            
+                        if (!$isExpired) {
                             $schedules[] = [
                                 'title' => $curriculum->title,
                                 'thumbnail' => $curriculum->thumbnail,
                                 'date' => $deliveryFrom->format('n月j日'),
                                 'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
-                                'isExpired' => false,  
+                                'isExpired' => false,
                                 'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
                             ];
                         } else {
-                            $isExpired = Carbon::now()->greaterThan($deliveryTo);
-            
-                            if (!$isExpired) {
-                                $schedules[] = [
-                                    'title' => $curriculum->title,
-                                    'thumbnail' => $curriculum->thumbnail,
-                                    'date' => $deliveryFrom->format('n月j日'),
-                                    'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
-                                    'isExpired' => false,
-                                    'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
-                                ];
-                            } else {
-                                $hasExpiredSchedules = true;
-                            }
+                            $hasExpiredSchedules = true;
                         }
-                    } catch (\Exception $e) {
-                        Log::error('スケジュールデータの解析に失敗しました。', ['error' => $e->getMessage()]);
                     }
+                } catch (\Exception $e) {
+                    Log::error('スケジュールデータの解析に失敗しました。', ['error' => $e->getMessage()]);
                 }
             }
         }
+        
     
         if (empty($schedules) && $hasExpiredSchedules) {
             return response()->json(['message' => '配信期間が過ぎました。'], 200);
