@@ -23,7 +23,7 @@ class Curriculum extends Model
 
     public function curriculumProgres()
     {
-        return $this->hasMany(CurriculumProgres::class);
+        return $this->hasMany(CurriculumProgress::class);
     }
 
     public function deliveryTimes()

@@ -71,6 +71,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
   Route::get('/curriculum/grade/{gradeId}', [App\Http\Controllers\Admin\CurriculumController::class, 'getCurriculumsByGrade'])->name('curriculum.grade');
   Route::get('/curriculum/{gradeId}', [App\Http\Controllers\Admin\CurriculumController::class, 'index'])->name('curriculum.index');
   Route::get('/curriculum_edit/{id}', [App\Http\Controllers\Admin\CurriculumController::class, 'edit'])->name('curriculum.edit');
+  Route::get('/curriculum_create', [App\Http\Controllers\Admin\CurriculumController::class, 'create'])->name('curriculum.create');
+  Route::post('/curriculum/store', [App\Http\Controllers\Admin\CurriculumController::class, 'store'])->name('curriculum.store');
   Route::put('/curriculum_update', [App\Http\Controllers\Admin\CurriculumController::class, 'update'])->name('curriculum.update');
   Route::post('/delivery_time/store', [App\Http\Controllers\Admin\Delivery_timeController::class, 'store'])->name('delivery_time.store');
   Route::get('/delivery_time/show/{id}', [App\Http\Controllers\Admin\Delivery_timeController::class, 'show'])->name('delivery_time.show');

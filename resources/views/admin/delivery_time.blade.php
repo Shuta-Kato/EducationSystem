@@ -20,19 +20,19 @@
                 <input type="hidden" value="{{ $delivery_time['id'] }}" name="data[{{ $index }}][delivery_time_id]">
                 <div class="form-row mb-3 schedule-item">
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="data[{{ $index }}][start_date]" placeholder="年/月/日" value="{{ $delivery_time['start_date'] }}">
+                        <input type="text" class="form-control" name="data[{{ $index }}][start_date]" placeholder="年/月/日" value="{{ $delivery_time['start_date'] }}" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" name="data[{{ $index }}][start_time]" placeholder="時:分" value="{{ $delivery_time['start_time'] }}">
+                        <input type="text" class="form-control" name="data[{{ $index }}][start_time]" placeholder="時:分" value="{{ $delivery_time['start_time'] }}" required>
                     </div>
                     <div class="col-md-1 text-center">
                         ～
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="data[{{ $index }}][end_date]" placeholder="年/月/日" value="{{ $delivery_time['end_date'] }}">
+                        <input type="text" class="form-control" name="data[{{ $index }}][end_date]" placeholder="年/月/日" value="{{ $delivery_time['end_date'] }}" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" name="data[{{ $index }}][end_time]" placeholder="時:分" value="{{ $delivery_time['end_time'] }}">
+                        <input type="text" class="form-control" name="data[{{ $index }}][end_time]" placeholder="時:分" value="{{ $delivery_time['end_time'] }}" required>
                     </div>
                     <div class="col-md-1">
                         <button type="button" class="btn btn-danger btn-remove-delivery_time" data-id="{{ $delivery_time['id'] }}">－</button>
@@ -43,19 +43,19 @@
                 <!-- データがない場合に表示する空のスケジュール入力行 -->
                 <div class="form-row mb-3 schedule-item">
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="data[0][start_date]" placeholder="年/月/日" value="">
+                        <input type="text" class="form-control" name="data[0][start_date]" placeholder="年/月/日" value="" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" name="data[0][start_time]" placeholder="時:分" value="">
+                        <input type="text" class="form-control" name="data[0][start_time]" placeholder="時:分" value="" required>
                     </div>
                     <div class="col-md-1 text-center">
                         ～
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="data[0][end_date]" placeholder="年/月/日" value="">
+                        <input type="text" class="form-control" name="data[0][end_date]" placeholder="年/月/日" value="" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" name="data[0][end_time]" placeholder="時:分" value="">
+                        <input type="text" class="form-control" name="data[0][end_time]" placeholder="時:分" value="" required>
                     </div>
                     <div class="col-md-1">
                         <button type="button" class="btn btn-danger btn-remove-delivery_time">－</button>
@@ -82,41 +82,39 @@
         // 行追加ボタン
         document.getElementById('add-delivery_time').addEventListener('click', function() {
             let scheduleList = document.getElementById('schedule-list');
-            let newItem = document.querySelector('.schedule-item').cloneNode(true);
+            let currentIndex = scheduleList.querySelectorAll('.schedule-item').length;
 
-            // 空のフィールドに設定
-            newItem.querySelectorAll('input').forEach(input => input.value = '');
-            newItem.querySelector('.btn-remove-delivery_time').removeAttribute('data-id'); // 新規項目にはIDを設定しない
+            // 新しい行のテンプレート
+            let newItem = `
+                <div class="form-row mb-3 schedule-item">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="data[${currentIndex}][start_date]" placeholder="年/月/日" value="" required>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="data[${currentIndex}][start_time]" placeholder="時:分" value="" required>
+                    </div>
+                    <div class="col-md-1 text-center">～</div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="data[${currentIndex}][end_date]" placeholder="年/月/日" value="" required>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="data[${currentIndex}][end_time]" placeholder="時:分" value="" required>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-danger btn-remove-delivery_time">－</button>
+                    </div>
+                </div>
+            `;
 
-            scheduleList.appendChild(newItem);
+            // HTMLを追加
+            scheduleList.insertAdjacentHTML('beforeend', newItem);
         });
 
         // 行削除ボタン
         document.getElementById('schedule-list').addEventListener('click', function(event) {
             if (event.target.classList.contains('btn-remove-delivery_time')) {
-                let id = event.target.getAttribute('data-id');
-                if (id) {
-
-                    // データベースから削除リクエストを送信
-                    fetch(`/admin/delivery_time/${id}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            }
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                // 行を削除
-                                event.target.closest('.schedule-item').remove();
-                            } else {
-                                alert('削除に失敗しました');
-                            }
-                        })
-                        .catch(error => alert('エラーが発生しました'));
-                } else {
-                    // 新規追加した行を削除
-                    event.target.closest('.schedule-item').remove();
-                }
+                let row = event.target.closest('.schedule-item');
+                row.remove();
             }
         });
     });
