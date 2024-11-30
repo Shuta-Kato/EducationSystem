@@ -7,16 +7,13 @@
 
     <h2>授業設定</h2>
 
-    <form action="{{ route('admin.curriculum.update') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.curriculum.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT') <!-- PUTメソッドを指定 -->
-
-        <input type="hidden" value="{{ $curriculum->id }}" name="id">
 
         <!-- サムネイルとファイル選択 -->
         <div class="form-group d-flex align-items-center">
             <div class="thumbnail-container">
-                <img id="thumbnail-preview" src="{{ asset($curriculum->thumbnail) }}" alt="サムネイル画像" class="img-thumbnail" style="height: 120px; display: {{ $curriculum->thumbnail ? 'block' : 'none' }};" />
+                <img id="thumbnail-preview" src="" alt="サムネイル画像" class="img-thumbnail" style="height: 120px; display: 'none';" />
             </div>
             <div class="ml-3">
                 <label for="thumbnail">サムネイル</label>
@@ -30,7 +27,7 @@
             <div class="col-md-9">
                 <select name="grade_id" class="form-control">
                     @foreach($grades as $grade)
-                    <option value="{{ $grade->id }}" {{ $grade->id == $curriculum->grade_id ? 'selected' : '' }}>{{ $grade->name }}</option>
+                    <option value="{{ $grade->id }}" {{ $grade->id  ? 'selected' : '' }}>{{ $grade->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -40,7 +37,7 @@
         <div class="form-group row">
             <label for="title" class="col-md-3 col-form-label">授業名</label>
             <div class="col-md-9">
-                <input type="text" name="title" class="form-control" value="{{ old('title', $curriculum->title) }}" maxlength="255" required>
+                <input type="text" name="title" class="form-control" maxlength="255" required>
             </div>
         </div>
 
@@ -48,7 +45,7 @@
         <div class="form-group row">
             <label for="video_url" class="col-md-3 col-form-label">動画URL</label>
             <div class="col-md-9">
-                <input type="text" name="video_url" class="form-control" value="{{ old('video_url', $curriculum->video_url) }}" maxlength="255" required>
+                <input type="text" name="video_url" class="form-control" maxlength="255" required>
             </div>
         </div>
 
@@ -56,7 +53,7 @@
         <div class="form-group row">
             <label for="description" class="col-md-3 col-form-label">授業概要</label>
             <div class="col-md-9">
-                <textarea name="description" class="form-control" maxlength="255" required>{{ old('description', $curriculum->description) }}</textarea>
+                <textarea name="description" class="form-control" maxlength="255" required></textarea>
             </div>
         </div>
 

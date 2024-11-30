@@ -9,10 +9,10 @@
             <a href="#" class="btn btn-secondary custom-back-button">&larr; 戻る</a>
             <h2 class="section-title">授業一覧</h2>
             <div class="mb-3">
-                <a href="{{ route('show.banner.edit') }}" class="btn btn-primary">新規登録</a>
+                <a href="{{ route('admin.curriculum.create') }}" class="btn btn-primary">新規登録</a>
             </div>
-            <div class="current-grade-container">
-                <p class="current-grade">{{ $currentGrade }}</p>
+            <div id="current-grade-container" class="current-grade-container">
+                <p id="current-grade" class="current-grade">{{ $currentGrade }}</p>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
                         @else
                         <p class="text-center">画像はありません</p>
                         @endif
-                        <div class="card-body-custom" style="height: 200px;">
+                        <div class="card-body-custom">
                             <h5 class="card-title">{{ $curriculum->title }}</h5>
                             <ul class="list-group list-group-flush">
                                 @foreach($curriculum->deliveryTimes as $deliveryTime)
@@ -79,10 +79,12 @@
                 url: `/admin/curriculum/grade/${gradeId}`,
                 method: 'GET',
                 success: function(response) {
-                    console.log(response);
+                    // 学年名をIDを使って更新
+                    $('#current-grade').text(response.currentGrade);
+
+                    // カリキュラムリストを更新
                     $('#curriculum-list').empty();
                     response.curriculums.forEach(function(curriculum) {
-                        console.log(curriculum);
                         const deliveryTimesHtml = curriculum.delivery_times.map(time => {
                             return `<li class="list-group-item">
                                         ${time.start_date} ${time.start_time} ~ ${time.end_time}
@@ -92,7 +94,11 @@
                         const cardHtml = `
                             <div class="col">
                                 <div class="card curriculum-card">
-                                    ${curriculum.thumbnail ? `<img src="${curriculum.thumbnail}" alt="授業画像" style="height: 200px;" class="card-img-top">` : '<p class="text-center">画像はありません</p>'}
+                                    ${
+                                        curriculum.thumbnail
+                                            ? `<img src="${curriculum.thumbnail}" alt="授業画像" style="height: 200px;" class="card-img-top">`
+                                            : '<p class="text-center">画像はありません</p>'
+                                    }
                                     <div class="card-body">
                                         <h5 class="card-title">${curriculum.title}</h5>
                                         <ul class="list-group list-group-flush">
@@ -100,7 +106,11 @@
                                         </ul>
                                         <div class="mt-3 d-flex justify-content-center">
                                             <a href="/admin/curriculum_edit/${curriculum.id}" class="btn btn-info custom-btn">授業内容編集</a>
-                                            ${curriculum.alway_delivery_flg ? '<button class="btn btn-secondary custom-btn" disabled>配信日時編集</button>' : `<a href="/admin/delivery_time/show/${curriculum.id}" class="btn btn-secondary custom-btn">配信日時編集</a>`}
+                                            ${
+                                                curriculum.alway_delivery_flg
+                                                    ? '<button class="btn btn-secondary custom-btn" disabled>配信日時編集</button>'
+                                                    : `<a href="/admin/delivery_time/show/${curriculum.id}" class="btn btn-secondary custom-btn">配信日時編集</a>`
+                                            }
                                         </div>
                                     </div>
                                 </div>
