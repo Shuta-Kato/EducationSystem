@@ -18,7 +18,7 @@
                 @foreach($delivery_times as $index => $delivery_time)
                 <!-- スケジュール入力行 -->
                 <input type="hidden" value="{{ $delivery_time['id'] }}" name="data[{{ $index }}][delivery_time_id]">
-                <div class="form-row mb-3 schedule-item">
+                <div class="form-row mb-3 schedule-item" data-id="{{ $delivery_time['id'] }}">
                     <div class="col-md-3">
                         <input type="text" class="form-control" name="data[{{ $index }}][start_date]" placeholder="年/月/日" value="{{ $delivery_time['start_date'] }}" required>
                     </div>
@@ -113,8 +113,35 @@
         // 行削除ボタン
         document.getElementById('schedule-list').addEventListener('click', function(event) {
             if (event.target.classList.contains('btn-remove-delivery_time')) {
-                let row = event.target.closest('.schedule-item');
-                row.remove();
+                let button = event.target;
+                let row = button.closest('.schedule-item');
+                let deliveryTimeId = button.dataset.id;
+
+                if (deliveryTimeId) {
+                    // Ajaxリクエストを送信して削除
+                    fetch(`/admin/delivery_time/${deliveryTimeId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message) {
+                                // 成功した場合、行を削除
+                                row.remove();
+                            } else if (data.error) {
+                                console.log(data.error);
+                            }
+                        })
+                        .catch(error => {
+                            console.log('削除中にエラーが発生しました');
+                            console.error(error);
+                        });
+                } else {
+                    // まだ保存されていない新規行の場合、ただ削除する
+                    row.remove();
+                }
             }
         });
     });
