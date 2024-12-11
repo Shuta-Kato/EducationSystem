@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', '管理 トップ')</title>
     <link rel="stylesheet" href="{{ asset('/css/admin/auth/curriculum.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/admin/top.css') }}">
