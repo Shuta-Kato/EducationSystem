@@ -87,48 +87,6 @@ class CurriculumController extends Controller
         return view('admin.curriculum_create', compact('grades'));
     }
 
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         // バリデーション
-    //         $request->validate([
-    //             'grade_id' => 'required|integer',
-    //             'title' => 'required|string|max:255',
-    //             'video_url' => 'required|string|max:255',
-    //             'description' => 'required|string',
-    //             'thumbnail' => 'nullable|image|max:2048',  // 画像は任意、最大2MB
-    //         ]);
-
-    //         // 新しいカリキュラムデータの作成
-    //         $curriculum = new Curriculum();
-    //         $curriculum->grade_id = $request->input('grade_id');
-    //         $curriculum->title = $request->input('title');
-    //         $curriculum->video_url = $request->input('video_url');
-    //         $curriculum->description = $request->input('description');
-
-    //         // サムネイルの保存処理
-    //         if ($request->hasFile('thumbnail')) {
-    //             $thumbnail = $request->file('thumbnail');
-    //             $fileName = time() . '_' . $thumbnail->getClientOriginalName();  // ファイル名をユニークに
-    //             $path = $thumbnail->storeAs('public/images', $fileName);  // 画像を'public/images'に保存
-
-    //             // データベースに保存するパスは`storage/`以下のものを使用
-    //             $curriculum->thumbnail = str_replace('public/', 'storage/', $path);
-    //         }
-
-    //         // カリキュラムデータを保存
-    //         $curriculum->save();
-
-    //         // 成功時のリダイレクト
-    //         return redirect()->route('admin.curriculum.index', $request->grade_id)
-    //             ->with('success', 'カリキュラムが正常に作成されました');
-    //     } catch (\Exception $e) {
-    //         // エラー時のリダイレクト
-    //         return redirect()->route('admin.curriculum.index', $request->grade_id)
-    //             ->withErrors(['error' => 'カリキュラムの作成に失敗しました: ' . $e->getMessage()]);
-    //     }
-    // }
-
     public function store(Request $request)
     {
         try {
